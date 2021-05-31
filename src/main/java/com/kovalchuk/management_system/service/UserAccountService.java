@@ -2,7 +2,7 @@ package com.kovalchuk.management_system.service;
 
 
 import com.kovalchuk.management_system.dal.model.UserAccount;
-import com.kovalchuk.management_system.service.dto.UserRoleDTO;
+import com.kovalchuk.management_system.service.dto.UserRoleDto;
 
 import java.util.List;
 
@@ -24,8 +24,10 @@ public interface UserAccountService {
 
     void save(UserAccount userAccount);
 
-    UserRoleDTO getDto(UserAccount userAccount);
+    UserRoleDto getDto(Long id);
 
-    void saveDto(UserRoleDTO userRoleDTO);
+    void saveDto(UserRoleDto userRoleDTO);
+
+    UserRoleDto getUserByUsername(String username);
 
 }

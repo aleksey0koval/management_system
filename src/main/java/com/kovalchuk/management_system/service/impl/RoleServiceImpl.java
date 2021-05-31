@@ -11,7 +11,6 @@ import java.util.List;
  * Implementation of {@link RoleService} interface.
  *
  * @author Aleskey Kovalchuk
- * @version 1.0
  */
 
 @Service

@@ -4,8 +4,8 @@ import com.kovalchuk.management_system.dal.model.UserAccount;
 import com.kovalchuk.management_system.dal.repository.RoleRepository;
 import com.kovalchuk.management_system.dal.repository.UserAccountRepository;
 import com.kovalchuk.management_system.service.UserAccountService;
-import com.kovalchuk.management_system.service.dto.UserRoleDTO;
-import org.springframework.context.annotation.Bean;
+import com.kovalchuk.management_system.service.converter.UserConverter;
+import com.kovalchuk.management_system.service.dto.UserRoleDto;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,6 @@ import java.util.List;
  * Implementation of {@link UserAccountService} interface.
  *
  * @author Aleskey Kovalchuk
- * @version 1.0
  */
 
 @Service
@@ -25,11 +24,17 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     private UserAccountRepository userAccountRepository;
     private RoleRepository roleRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private UserConverter userConverter;
 
     public UserAccountServiceImpl(UserAccountRepository userAccountRepository,
-                                  RoleRepository roleRepository) {
+                                  RoleRepository roleRepository,
+                                  BCryptPasswordEncoder bCryptPasswordEncoder,
+                                  UserConverter userConverter) {
         this.userAccountRepository = userAccountRepository;
         this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userConverter = userConverter;
     }
 
 
@@ -37,7 +42,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     public List<UserAccount> findAll() {
         return userAccountRepository.findAll();
     }
-
 
 
     @Override
@@ -55,51 +59,56 @@ public class UserAccountServiceImpl implements UserAccountService {
         if (userAccount.getId() == null) {
             userAccount.setDate(Date.valueOf(LocalDate.now()));
         }
-
         userAccountRepository.save(userAccount);
     }
 
 
-
-
     @Override
-    public void saveDto(UserRoleDTO userRoleDTO) {
+    public void saveDto(UserRoleDto userRoleDTO) {
         UserAccount userAccount = null;
         if (userRoleDTO.getId() == null) {
             userAccount = new UserAccount();
             userAccount.setUsername(userRoleDTO.getUsername());
-            userAccount.setPassword(userRoleDTO.getPassword());
+            userAccount.setPassword(bCryptPasswordEncoder.encode(userRoleDTO.getPassword()));
             userAccount.setFirstName(userRoleDTO.getFirstName());
             userAccount.setLastName(userRoleDTO.getLastName());
             userAccount.setDate(Date.valueOf(LocalDate.now()));
         } else {
             userAccount = userAccountRepository.findById(userRoleDTO.getId()).get();
-            if (userRoleDTO.getEnabled().equals("ACTIVE")) {
-                userAccount.setEnabled(true);
-            } else {
-                userAccount.setEnabled(false);
-            }
-//            userAccount.;
+//            if (userRoleDTO.getEnabled().equals("ACTIVE")) {
+//                userAccount.setEnabled(true);
+//            } else {
+//                userAccount.setEnabled(false);
+//            }
         }
 
         userAccountRepository.save(userAccount);
     }
 
     @Override
-    public UserRoleDTO getDto(UserAccount userAccount) {
-        UserRoleDTO dto = new UserRoleDTO();
+    public UserRoleDto getDto(Long id) {
+        UserAccount userAccount = userAccountRepository.findById(id).get();
+        UserRoleDto dto = new UserRoleDto();
         dto.setId(userAccount.getId());
+        dto.setUsername(userAccount.getUsername());
         dto.setPassword(userAccount.getPassword());
         dto.setFirstName(userAccount.getFirstName());
         dto.setLastName(userAccount.getLastName());
         dto.setDate(userAccount.getDate());
-        if (userAccount.isEnabled()) {
-            dto.setEnabled("ACTIVE");
-        } else {
-            dto.setEnabled("INACTIVE");
-        }
-//        dto.setRole();
+//        if (userAccount.isEnabled()) {
+//            dto.setEnabled("ACTIVE");
+//        } else {
+//            dto.setEnabled("INACTIVE");
+//        }
         return dto;
+
+//        public List<UserRoleDto> listDto() {
+//            return (UserRoleDto) userAccountRepository.getAllDto();
+//        }
+    }
+
+    public UserRoleDto getUserByUsername(String username){
+        return userConverter.toDto(userAccountRepository.findByUsername(username));
     }
 }
 

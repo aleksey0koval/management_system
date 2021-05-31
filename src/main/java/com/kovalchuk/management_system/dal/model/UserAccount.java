@@ -11,7 +11,6 @@ import java.util.Set;
  * Simple JavaBean domain object that represents a UserAccount.
  *
  * @author Aleskey Kovalchuk
- * @version 1.0
  */
 
 //@Data
@@ -44,7 +43,11 @@ public class UserAccount implements Serializable {
     @Column(name = "enabled")
     private boolean enabled;
 
-    @ManyToMany()
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    },
+            fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

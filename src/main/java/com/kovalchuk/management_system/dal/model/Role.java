@@ -10,7 +10,6 @@ import java.util.Set;
  * Simple JavaBean object that represents role of {@link UserAccount}.
  *
  * @author Aleskey Kovalchuk
- * @version 1.0
  */
 
 @Data
@@ -28,7 +27,7 @@ public class Role implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<UserAccount> userAccounts;
 
 }

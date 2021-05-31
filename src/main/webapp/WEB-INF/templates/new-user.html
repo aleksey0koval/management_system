@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>New/edit user</title>
+</head>
+<body>
+<form method="post" sec:authorize th:action="@{/logout}">
+    <div>
+        <input type="submit" value="logout">
+    </div>
+</form>
+
+<h1>New/Edit user</h1>
+<form th:action="@{createUser}" th:object="${user}" th:method="post">
+
+    <input type="hidden" th:field="*{id}"/>
+
+    Username <input type="text" th:field="*{username}"/>
+    <!--    <small th:text="${error}"-->
+    <br>
+    Password <input type="text" th:field="*{password}"/>
+    <br>
+    First name <input type="text" th:field="*{firstName}"/>
+    <br>
+    Last name <input type="text" th:field="*{lastName}"/>
+    <br>
+    Role <select >
+            <option th:each="item: ${user}" th:value="${user.role}" th:text="*{role}"></option>
+    </select>
+    <br>
+    Status <select th:each="item: ${user}">
+    <option  th:value="${user.status}"></option>
+<!--    <option value="ACTIVE">ACTIVE</option>-->
+<!--    <option value="INACTIVE">INACTIVE</option>-->
+</select>
+    <br>
+    <input type="submit" value="OK">
+</form>
+<input type="button" value="Back" onclick="window.location.href = '/user/'"/>
+
+
+</body>
+</html>

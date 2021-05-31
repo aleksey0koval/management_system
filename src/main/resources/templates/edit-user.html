@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+</head>
+<body>
+<form method="post" th:action="@{/logout}">
+    <div>
+        <input type="submit" value="logout">
+    </div>
+</form>
+
+<h1>Edit user</h1>
+<form th:action="@{updateUser}" th:object="${user}" th:method="post">
+
+    <input type="hidden" th:field="*{id}"/>
+
+    Username <input type="text" disabled th:field="*{username}"/>
+    <!--    <small th:text="${error}"-->
+    <br>
+    Password <input type="text" disabled th:field="*{password}"/>
+    <br>
+    First name <input type="text" disabled th:field="*{firstName}"/>
+    <br>
+    Last name <input type="text" disabled th:field="*{lastName}"/>
+    <br>
+    Role <select>
+        <option>ADMIN</option>
+        <option>USER</option>
+</select>
+    <br>
+    Status <select>
+        <option>ACTIVE</option>
+        <option>INACTIVE</option>
+</select>
+    <br>
+    <input type="submit" value="OK">
+</form>
+<input type="button" value="Back" onclick="window.location.href = '/user'"/>
+
+
+</body>
+</html>

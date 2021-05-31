@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        .pagination {
+            display: inline-block;
+        }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 5px 5px;
+            text-decoration: none;
+        }
+
+        .pagination a.active {
+            background-color: gray;
+            color: white;
+            border-radius: 2px;
+        }
+    </style>
+
+    <title>Users</title>
+</head>
+<body>
+<form method="post" sec:authorize th:action="@{/logout}">
+    <input type="submit" value="logout">
+</form>
+
+<h1>Management System</h1>
+
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Password</th>
+        <th>First Name</th>
+        <th>Last Name</th>e
+    </tr>
+
+    <tr th:each="items: ${users}">
+
+        <td><a th:text="${items.username}" th:href="@{/user/{id}(id=${items.id})}"></a></td>
+        <td th:text="${items.password}"></td>
+        <td th:text="${items.firstName}"></td>
+        <td th:text="${items.lastName}"></td>
+
+    </tr>
+
+
+</table>
+
+<input type="button" value="New" onclick="window.location.href = 'new'"/>
+
+<!--<div th:if="${users.totalPages > 0}" class="pagination"-->
+<!--     th:each="pageNumber : ${pageNumbers}">-->
+<!--    <a th:href="@{/listBooks(size=${bookPage.size}, page=${pageNumber})}"-->
+<!--       th:text=${pageNumber}-->
+<!--       th:class="${pageNumber==bookPage.number + 1} ? active"></a>-->
+<!--</div>-->
+
+
+<!--<nav  th:if="${users.totalPages gt 0}">-->
+<!--    <ul>-->
+<!--        <li >-->
+<!--            <a th:text="${'Total: ' + users.getTotalElements()}">Total</a>-->
+<!--        </li>-->
+<!--        <li  th:classappend="${users.number eq 0} ? 'disabled'">-->
+<!--            <a  th:href="@{/user/?page={id}(id=${users.number lt 2 ? 1 : users.number})}">Previous</a>-->
+<!--        </li>-->
+<!--        <li th:classappend="${i eq users.number + 1} ? 'active'"-->
+<!--            th:each="i : ${#numbers.sequence( users.number + 1, users.totalPages > 3 + users.number ? users.number + 3 : users.totalPages, 1)}">-->
+<!--            <a th:href="@{/user/?page={id}(id=${i})}" th:text="${i}"-->
+<!--               th:title="${'Page '+ i}"></a>-->
+<!--        </li>-->
+<!--        <li  th:if="${users.number + 3 < users.totalPages}">-->
+<!--            <a  href="#">...</a>-->
+<!--        </li>-->
+<!--        <li  th:classappend="${users.number + 1 eq users.totalPages} ? 'disabled'">-->
+<!--            <a th:href="@{/user/?page={id}(id=${users.number + 2})}">Next</a>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</nav>-->
+
+<!--<nav aria-label="Pagination" th:if="${users.totalPages gt 0}">-->
+<!--    <ul class="pagination justify-content-end">-->
+<!--        <li class="page-item disabled">-->
+<!--            <a class="page-link" th:text="${'Total: ' + users.getTotalElements()}">Total</a>-->
+<!--        </li>-->
+<!--        <li class="page-item" th:classappend="${users.number eq 0} ? 'disabled'">-->
+<!--            <a class="page-link" th:href="@{/user/?page={id}(id=${users.number lt 2 ? 1 : users.number})}">Previous</a>-->
+<!--        </li>-->
+<!--        <li class="page-item" th:classappend="${i eq users.number + 1} ? 'active'"-->
+<!--            th:each="i : ${#numbers.sequence( users.number + 1, users.totalPages > 3 + users.number ? users.number + 3 : users.totalPages, 1)}">-->
+<!--            <a class="page-link" th:href="@{/user/?page={id}(id=${i})}" th:text="${i}"-->
+<!--               th:title="${'Page '+ i}"></a>-->
+<!--        </li>-->
+<!--        <li class="page-item disabled" th:if="${users.number + 3 < users.totalPages}">-->
+<!--            <a class="page-link" href="#">...</a>-->
+<!--        </li>-->
+<!--        <li class="page-item" th:classappend="${users.number + 1 eq users.totalPages} ? 'disabled'">-->
+<!--            <a class="page-link" th:href="@{/user/?page={id}(id=${users.number + 2})}">Next</a>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</nav>-->
+
+</body>
+</html>

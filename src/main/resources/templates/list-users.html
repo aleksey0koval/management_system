@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Users</title>
+</head>
+<body>
+<form method="post" th:action="@{/logout}">
+    <div>
+        <button>logout</button>
+    </div>
+</form>
+
+<h1>Management System</h1>
+
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Password</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Date</th>
+        <th>Enabled</th>
+        <th>Role</th>
+    </tr>
+    <tr th:each="items: ${users}">
+        <td><a th:text="${items.username}" th:href="@{/user/{id}(id=${items.id})}"></a></td>
+        <td th:text="${items.password}"></td>
+        <td th:text="${items.firstName}"></td>
+        <td th:text="${items.lastName}"></td>
+        <td th:text="${items.date}"></td>
+        <td th:text="${items.enabled}"></td>
+        <td th:text="${items.roles}"></td>
+    </tr>
+</table>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <input type="button" value="New" onclick="window.location.href = '/user/new'"/>
+</div>
+
+</body>
+</html>

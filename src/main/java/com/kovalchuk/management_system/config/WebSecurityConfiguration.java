@@ -41,6 +41,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/resources/**").permitAll()
                 .antMatchers("/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/new/**").hasAuthority("ADMIN")
                 .antMatchers("/edit/**").hasAuthority("ADMIN")
@@ -55,6 +56,4 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .exceptionHandling().accessDeniedPage("/403");
     }
-
-
 }

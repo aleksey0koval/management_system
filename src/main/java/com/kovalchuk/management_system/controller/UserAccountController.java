@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/user")
 public class UserAccountController {
@@ -49,7 +51,7 @@ public class UserAccountController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(@ModelAttribute("user") UserAccount userAccount,
+    public String createUser(@Valid @ModelAttribute("user") UserAccount userAccount,
                              BindingResult bindingResult,
                              Model model) {
         if (bindingResult.hasErrors()) {
@@ -60,7 +62,7 @@ public class UserAccountController {
     }
 
     @PostMapping("{id}/updateUser")
-    public String updateUser(@ModelAttribute("user") UserAccount userAccount,
+    public String updateUser(@Valid @ModelAttribute("user") UserAccount userAccount,
                              BindingResult bindingResult,
                              Model model) {
         if (bindingResult.hasErrors()) {

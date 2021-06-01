@@ -19,13 +19,24 @@
     <input type="hidden" th:field="*{id}"/>
 
     Username <input type="text" disabled th:field="*{username}"/>
-    <!--    <small th:text="${error}"-->
+    <ul>
+        <li th:each="err : ${#fields.errors('username')}" th:text="${err}" class="error" />
+    </ul>
     <br>
     Password <input type="text" disabled th:field="*{password}"/>
+    <ul>
+        <li th:each="err : ${#fields.errors('password')}" th:text="${err}" class="error" />
+    </ul>
     <br>
     First name <input type="text" disabled th:field="*{firstName}"/>
+    <ul>
+        <li th:each="err : ${#fields.errors('firstName')}" th:text="${err}" class="error" />
+    </ul>
     <br>
     Last name <input type="text" disabled th:field="*{lastName}"/>
+    <ul>
+        <li th:each="err : ${#fields.errors('lastName')}" th:text="${err}" class="error" />
+    </ul>
     <br>
     Role <select>
         <option>ADMIN</option>

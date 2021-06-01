@@ -2,7 +2,6 @@ package com.kovalchuk.management_system.service.security;
 
 import com.kovalchuk.management_system.dal.model.Role;
 import com.kovalchuk.management_system.dal.model.UserAccount;
-import com.kovalchuk.management_system.service.dto.UserRoleDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,31 +13,33 @@ import java.util.Set;
 
 public class MyUserAccountDetails implements UserDetails {
 
-    private UserRoleDto userRoleDto;
+    private UserAccount userAccount;
 
-    public MyUserAccountDetails(UserRoleDto userRoleDto) {
-        this.userRoleDto = userRoleDto;
+    public MyUserAccountDetails(UserAccount userAccount) {
+        this.userAccount = userAccount;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String role = userRoleDto.getRole();
+        Set<Role> roles = userAccount.getRoles();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-
-        authorities.add(new SimpleGrantedAuthority(role));
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+            System.out.println(role.getName());
+        }
 
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return userRoleDto.getPassword();
+        return userAccount.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return userRoleDto.getUsername();
+        return userAccount.getUsername();
     }
 
     @Override
@@ -58,6 +59,6 @@ public class MyUserAccountDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return userAccount.isEnabled();
     }
 }

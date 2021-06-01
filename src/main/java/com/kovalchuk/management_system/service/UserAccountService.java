@@ -10,7 +10,6 @@ import java.util.List;
  * Service class for {@link UserAccount}.
  *
  * @author Aleskey Kovalchuk
- * @version 1.0
  */
 
 
@@ -24,10 +23,10 @@ public interface UserAccountService {
 
     void save(UserAccount userAccount);
 
-    UserRoleDto getDto(Long id);
-
-    void saveDto(UserRoleDto userRoleDTO);
-
-    UserRoleDto getUserByUsername(String username);
+//    UserRoleDto getDto(Long id);
+//
+//    void saveDto(UserRoleDto userRoleDTO);
+//
+//    UserRoleDto getUserByUsername(String username);
 
 }

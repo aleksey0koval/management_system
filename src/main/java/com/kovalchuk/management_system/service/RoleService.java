@@ -9,7 +9,6 @@ import java.util.List;
  * Service class for {@link Role}.
  *
  * @author Aleskey Kovalchuk
- * @version 1.0
  */
 
 public interface RoleService {

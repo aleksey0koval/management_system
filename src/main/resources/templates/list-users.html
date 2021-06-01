@@ -37,7 +37,7 @@
     </tr>
 </table>
 
-<div sec:authorize="hasRole('ROLE_ADMIN')">
+<div sec:authorize="hasAuthority('ADMIN')">
     <input type="button" value="New" onclick="window.location.href = '/user/new'"/>
 </div>
 

@@ -1,12 +1,8 @@
 package com.kovalchuk.management_system.service.impl;
 
 import com.kovalchuk.management_system.dal.model.UserAccount;
-import com.kovalchuk.management_system.dal.repository.RoleRepository;
 import com.kovalchuk.management_system.dal.repository.UserAccountRepository;
 import com.kovalchuk.management_system.service.UserAccountService;
-import com.kovalchuk.management_system.service.converter.UserConverter;
-import com.kovalchuk.management_system.service.dto.UserRoleDto;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -23,20 +19,10 @@ import java.util.List;
 public class UserAccountServiceImpl implements UserAccountService {
 
     private UserAccountRepository userAccountRepository;
-    private RoleRepository roleRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private UserConverter userConverter;
 
-    public UserAccountServiceImpl(UserAccountRepository userAccountRepository,
-                                  RoleRepository roleRepository,
-                                  BCryptPasswordEncoder bCryptPasswordEncoder,
-                                  UserConverter userConverter) {
+    public UserAccountServiceImpl(UserAccountRepository userAccountRepository) {
         this.userAccountRepository = userAccountRepository;
-        this.roleRepository = roleRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.userConverter = userConverter;
     }
-
 
     @Override
     public List<UserAccount> findAll() {
@@ -62,53 +48,53 @@ public class UserAccountServiceImpl implements UserAccountService {
         userAccountRepository.save(userAccount);
     }
 
-
-    @Override
-    public void saveDto(UserRoleDto userRoleDTO) {
-        UserAccount userAccount = null;
-        if (userRoleDTO.getId() == null) {
-            userAccount = new UserAccount();
-            userAccount.setUsername(userRoleDTO.getUsername());
-            userAccount.setPassword(bCryptPasswordEncoder.encode(userRoleDTO.getPassword()));
-            userAccount.setFirstName(userRoleDTO.getFirstName());
-            userAccount.setLastName(userRoleDTO.getLastName());
-            userAccount.setDate(Date.valueOf(LocalDate.now()));
-        } else {
-            userAccount = userAccountRepository.findById(userRoleDTO.getId()).get();
-//            if (userRoleDTO.getEnabled().equals("ACTIVE")) {
-//                userAccount.setEnabled(true);
-//            } else {
-//                userAccount.setEnabled(false);
-//            }
-        }
-
-        userAccountRepository.save(userAccount);
-    }
-
-    @Override
-    public UserRoleDto getDto(Long id) {
-        UserAccount userAccount = userAccountRepository.findById(id).get();
-        UserRoleDto dto = new UserRoleDto();
-        dto.setId(userAccount.getId());
-        dto.setUsername(userAccount.getUsername());
-        dto.setPassword(userAccount.getPassword());
-        dto.setFirstName(userAccount.getFirstName());
-        dto.setLastName(userAccount.getLastName());
-        dto.setDate(userAccount.getDate());
-//        if (userAccount.isEnabled()) {
-//            dto.setEnabled("ACTIVE");
+//
+//    @Override
+//    public void saveDto(UserRoleDto userRoleDTO) {
+//        UserAccount userAccount = null;
+//        if (userRoleDTO.getId() == null) {
+//            userAccount = new UserAccount();
+//            userAccount.setUsername(userRoleDTO.getUsername());
+//            userAccount.setPassword(bCryptPasswordEncoder.encode(userRoleDTO.getPassword()));
+//            userAccount.setFirstName(userRoleDTO.getFirstName());
+//            userAccount.setLastName(userRoleDTO.getLastName());
+//            userAccount.setDate(Date.valueOf(LocalDate.now()));
 //        } else {
-//            dto.setEnabled("INACTIVE");
+//            userAccount = userAccountRepository.findById(userRoleDTO.getId()).get();
+////            if (userRoleDTO.getEnabled().equals("ACTIVE")) {
+////                userAccount.setEnabled(true);
+////            } else {
+////                userAccount.setEnabled(false);
+////            }
 //        }
-        return dto;
+//
+//        userAccountRepository.save(userAccount);
+//    }
 
-//        public List<UserRoleDto> listDto() {
-//            return (UserRoleDto) userAccountRepository.getAllDto();
-//        }
-    }
-
-    public UserRoleDto getUserByUsername(String username){
-        return userConverter.toDto(userAccountRepository.findByUsername(username));
-    }
+//    @Override
+//    public UserRoleDto getDto(Long id) {
+//        UserAccount userAccount = userAccountRepository.findById(id).get();
+//        UserRoleDto dto = new UserRoleDto();
+//        dto.setId(userAccount.getId());
+//        dto.setUsername(userAccount.getUsername());
+//        dto.setPassword(userAccount.getPassword());
+//        dto.setFirstName(userAccount.getFirstName());
+//        dto.setLastName(userAccount.getLastName());
+//        dto.setDate(userAccount.getDate());
+////        if (userAccount.isEnabled()) {
+////            dto.setEnabled("ACTIVE");
+////        } else {
+////            dto.setEnabled("INACTIVE");
+////        }
+//        return dto;
+//
+////        public List<UserRoleDto> listDto() {
+////            return (UserRoleDto) userAccountRepository.getAllDto();
+////        }
+//    }
+//
+//    public UserRoleDto getUserByUsername(String username){
+//        return userConverter.toDto(userAccountRepository.findByUsername(username));
+//    }
 }
 

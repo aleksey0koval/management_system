@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>403</title>
+</head>
+<body>
+<h1>Вам запрещен вход, вернитесь назад, и введите другие данные</h1>
+<form method="post" th:action="@{/login}">
+    <div>
+        <button>logout</button>
+    </div>
+</form>
+</body>
+</html>

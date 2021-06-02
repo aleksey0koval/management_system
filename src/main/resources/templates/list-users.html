@@ -3,18 +3,28 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+    <title>Users</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Users</title>
+
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+
 </head>
+
 <body>
 <form method="post" th:action="@{/logout}">
     <div>
-        <button>logout</button>
+        <button class="btn logout" type="submit">Logout</button>
     </div>
 </form>
 
 <h1>Management System</h1>
+
+<form th:action="@{search}">
+    <input name="param" type="search" placeholder="enter text to search">
+    <button class="btn logout" type="submit">Search</button>
+</form>
+
 
 <table>
     <tr>
@@ -32,14 +42,43 @@
         <td th:text="${items.firstName}"></td>
         <td th:text="${items.lastName}"></td>
         <td th:text="${items.date}"></td>
-        <td th:text="${items.enabled}"></td>
-        <td th:text="${items.roles}"></td>
+        <td th:text="${items.enabled}? 'Active' : 'Inactive'"></td>
+        <div th:each="items1: ${items.getRoles()}">
+            <td th:text="${items1.name}"></td>
+        </div>
+
     </tr>
 </table>
 
+<!--<div class="pagination">-->
+<!--    <nav aria-label="Pagination" th:if="${users.totalPages gt 0}">-->
+<!--        <ul class="pagination justify-content-end">-->
+<!--            <li class="page-item disabled">-->
+<!--                <a class="page-link" th:text="${'Total: ' + sensors.getTotalElements()}">Total</a>-->
+<!--            </li>-->
+<!--            <li class="page-item" th:classappend="${sensors.number eq 0} ? 'disabled'">-->
+<!--                <a class="page-link" th:href="@{/?page={id}(id=${sensors.number lt 2 ? 1 : sensors.number})}">Previous</a>-->
+<!--            </li>-->
+<!--            <li class="page-item" th:classappend="${i eq sensors.number + 1} ? 'active'"-->
+<!--                th:each="i : ${#numbers.sequence( sensors.number + 1, sensors.totalPages > 3 + sensors.number ? sensors.number + 3 : sensors.totalPages, 1)}">-->
+<!--                <a class="page-link" th:href="@{/?page={id}(id=${i})}" th:text="${i}"-->
+<!--                   th:title="${'Page '+ i}"></a>-->
+<!--            </li>-->
+<!--            <li class="page-item disabled" th:if="${sensors.number + 3 < sensors.totalPages}">-->
+<!--                <a class="page-link" href="#">...</a>-->
+<!--            </li>-->
+<!--            <li class="page-item" th:classappend="${sensors.number + 1 eq sensors.totalPages} ? 'disabled'">-->
+<!--                <a class="page-link" th:href="@{/?page={id}(id=${sensors.number + 2})}">Next</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </nav>-->
+<!--</div>-->
+
 <div sec:authorize="hasAuthority('ADMIN')">
-    <input type="button" value="New" onclick="window.location.href = '/user/new'"/>
+    <input class="btn add" type="button" value="New" onclick="window.location.href = '/user/new'"/>
 </div>
+
+
 
 </body>
 </html>

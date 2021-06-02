@@ -2,3 +2,63 @@
 .error {
     color: red;
 }
+
+.btn {
+    margin-top: auto;
+    margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid black;
+    width: 100px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.logout {
+    border-color: dodgerblue;
+    color: dodgerblue;
+}
+
+.logout:hover {
+    background-color: dodgerblue;
+    color: white;
+}
+
+.add {
+    border-color: green;
+    color: green;
+}
+
+.add:hover {
+    background-color: green;
+    color: white;
+}
+
+.cancel {
+    border-color: red;
+    color: red;
+}
+
+.cancel:hover {
+    background-color: red;
+    color: white;
+}
+
+a {
+    color: #008000;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #800080;
+}
+
+a:hover {
+    color: red;
+    text-decoration: underline;
+}
+
+
+

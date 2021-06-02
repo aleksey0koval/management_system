@@ -3,66 +3,80 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+    <title>New user</title>
     <meta charset="UTF-8">
-    <title>New/edit user</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" th:href="@{/static/main.css}">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
 
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
+    <script type="text/javascript" th:src="@{/js/actions.js}"></script>
 
 </head>
+
 <body>
 <form method="post" th:action="@{/logout}">
     <div>
-        <input type="submit" value="logout">
+        <button class="btn logout" type="submit">Logout</button>
     </div>
 </form>
 
 <h1>New user</h1>
 <form th:action="@{createUser}" th:object="${user}" th:method="post">
 
-    <!--    <input type="hidden" th:field="*{id}"/>-->
 
-    Username <input type="text" th:field="*{username}"/>
-    <ul>
-        <li th:each="err : ${#fields.errors('username')}" th:text="${err}" class="error"/>
-    </ul>
-    <br>
-    Password <input type="text" th:field="*{password}"/>
-    <ul>
-        <li th:each="err : ${#fields.errors('password')}" th:text="${err}" class="error"/>
-    </ul>
-    <br>
-    First name <input type="text" th:field="*{firstName}"/>
-    <ul>
-        <li th:each="err : ${#fields.errors('firstName')}" th:text="${err}" class="error"/>
-    </ul>
-    <br>
-    Last name <input type="text" th:field="*{lastName}"/>
-    <ul>
-        <li th:each="err : ${#fields.errors('lastName')}" th:text="${err}" class="error"/>
-    </ul>
-    <br>
-    Role <select>
-    <!--            <option th:each="item1: ${role}" th:value="${user.roles}"></option>-->
-    <option>ADMIN</option>
-    <option>USER</option>
-</select>
-    <br>
-    Status <select th:each="item: ${user}">
-    <!--    <option  th:value="${user.enabled}"></option>-->
-    <option value="ACTIVE">ACTIVE</option>
-    <option value="INACTIVE">INACTIVE</option>
-</select>
-    <br>
-    <input type="submit" value="OK">
+    <div>
+        <label for="Username">Username</label>
+        <input id="Username" type="text" th:value="${user.username}" th:field="*{username}"/>
+        <ul>
+            <li th:each="err : ${#fields.errors('username')}" th:text="${err}" class="error"/>
+        </ul>
+    </div>
+    <div>
+        <label for="Password">Password</label>
+        <input id="Password" type="text" th:value="${user.password}" th:field="*{password}"/>
+        <ul>
+            <li th:each="err : ${#fields.errors('password')}" th:text="${err}" class="error"/>
+        </ul>
+    </div>
+    <div>
+        <label for="First">First name</label>
+        <input id="First" type="text" th:value="${user.firstName}" th:field="*{firstName}"/>
+        <ul>
+            <li th:each="err : ${#fields.errors('firstName')}" th:text="${err}" class="error"/>
+        </ul>
+    </div>
+    <div>
+        <label for="Last">Last name</label>
+        <input id="Last" type="text" th:value="${user.lastName}" th:field="*{lastName}"/>
+        <ul>
+            <li th:each="err : ${#fields.errors('lastName')}" th:text="${err}" class="error"/>
+        </ul>
+    </div>
+    <div>
+        <label for="Role">Role</label>
+        <select id="Role" th:field="*{role}">
+            <!--            <div th:each="item1: ${role}">-->
+            <!--                <option th:text="${item1.name}" th:field="*{role}"></option>-->
+            <!--            </div>-->
+            <option th:value="ADMIN">ADMIN</option>
+            <option th:value="USER">USER</option>
+
+            <!--            <option th:each="item1: ${role}" th:text="${item1.name}"></option>-->
+        </select>
+    </div>
+
+    <div>
+        <label for="Status">Status</label>
+        <select id="Status" th:field="*{enabled}">
+            <option value=true>Unlock</option>
+            <option value=false>Lock</option>
+        </select>
+    </div>
+
+    <input class="btn add" type="submit" value="OK">
+
 </form>
-<input type="button" value="Back" onclick="window.location.href = '/user'"/>
-
+<input class="btn cancel" type="button" value="Back" onclick="window.location.href = '/user'"/>
 
 </body>
 </html>

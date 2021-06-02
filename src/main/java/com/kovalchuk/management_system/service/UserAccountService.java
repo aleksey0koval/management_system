@@ -2,7 +2,9 @@ package com.kovalchuk.management_system.service;
 
 
 import com.kovalchuk.management_system.dal.model.UserAccount;
-import com.kovalchuk.management_system.service.dto.UserRoleDto;
+import com.kovalchuk.management_system.service.dto.RequestDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -12,8 +14,8 @@ import java.util.List;
  * @author Aleskey Kovalchuk
  */
 
-
 public interface UserAccountService {
+    Page<UserAccount> findAll(Pageable pageable);
 
     List<UserAccount> findAll();
 
@@ -21,12 +23,11 @@ public interface UserAccountService {
 
     UserAccount findByUsername(String username);
 
-    void save(UserAccount userAccount);
+    void save(RequestDto requestDto);
 
-//    UserRoleDto getDto(Long id);
-//
-//    void saveDto(UserRoleDto userRoleDTO);
-//
-//    UserRoleDto getUserByUsername(String username);
+    void update(RequestDto requestDto);
 
+    RequestDto getRequestDto(Long id);
+
+    List<UserAccount> searchUserAccount(String param);
 }

@@ -16,8 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "roles")
 public class Role implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -8665258811849912179L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +29,12 @@ public class Role implements Serializable {
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<UserAccount> userAccounts;
 
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", userAccounts=" + userAccounts +
+                '}';
+    }
 }

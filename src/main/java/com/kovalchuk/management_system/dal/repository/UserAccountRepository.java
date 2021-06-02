@@ -1,14 +1,15 @@
 package com.kovalchuk.management_system.dal.repository;
 
 import com.kovalchuk.management_system.dal.model.UserAccount;
-import com.kovalchuk.management_system.service.dto.UserRoleDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
 public interface UserAccountRepository extends JpaRepository<UserAccount, Long> {
+
+    Page<UserAccount> findAll(Pageable pageable);
 
     UserAccount findByUsername(String username);
 

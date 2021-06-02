@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Search user</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+
+</head>
+<body>
+<form method="post" th:action="@{/logout}">
+    <div>
+        <button class="btn logout" type="submit">Logout</button>
+    </div>
+</form>
+
+<h1>Management System</h1>
+
+<form  th:action="@{search}">
+    <input name="param" type="search" placeholder="Введите символ или набор символов">
+    <button class="btn logout" type="submit">Search</button>
+</form>
+
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Password</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Date</th>
+        <th>Enabled</th>
+        <th>Role</th>
+    </tr>
+    <tr th:each="items: ${users}">
+        <td><a th:text="${items.username}" th:href="@{/user/{id}(id=${items.id})}"></a></td>
+        <td th:text="${items.password}"></td>
+        <td th:text="${items.firstName}"></td>
+        <td th:text="${items.lastName}"></td>
+        <td th:text="${items.date}"></td>
+        <td th:text="${items.enabled}? 'Active' : 'Inactive'"></td>
+        <div th:each="items1: ${items.getRoles()}">
+            <td th:text="${items1.name}"></td>
+        </div>
+
+    </tr>
+</table>
+
+<div sec:authorize="hasAuthority('ADMIN')">
+    <input class="btn add" type="button" value="New" onclick="window.location.href = '/user/new'"/>
+</div>
+<input class="btn cancel" type="button" value="Back" onclick="window.location.href = '/user'"/>
+
+</body>
+</html>

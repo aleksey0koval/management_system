@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -34,18 +35,23 @@ public class UserAccountController {
     }
 
     @GetMapping("")
-    public String showAllUserAccounts(Model model,
-                                      HttpServletRequest request) {
-        int page = 0;
-        int size = 4;
+    public String viewHomePage(Model model) {
+        return showAllUserAccounts(1, model);
+    }
 
-        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-            page = Integer.parseInt(request.getParameter("page")) - 1;
-        }
-        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-            size = Integer.parseInt(request.getParameter("size"));
-        }
-        model.addAttribute("users", userAccountService.findAll(PageRequest.of(page, size)));
+    @GetMapping("pageNo")
+    public String showAllUserAccounts(@PathVariable(value = "pageNo") int pageNo,
+                                      Model model) {
+        int pageSize = 8;
+
+        Page<UserAccount> page = userAccountService.findPaginated(pageNo, pageSize);
+        List<UserAccount> userAccounts = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+
+        model.addAttribute("users", userAccounts);
         return "list-users";
     }
 
@@ -100,7 +106,7 @@ public class UserAccountController {
 
     @ExceptionHandler
     public String handleException(DuplicateUsernameException exception
-                                  ) {
+    ) {
         UsernameDuplicate duplicate = new UsernameDuplicate();
         duplicate.setInfo(exception.getMessage());
         return "error";

@@ -8,6 +8,7 @@ import com.kovalchuk.management_system.service.UserAccountService;
 import com.kovalchuk.management_system.service.dto.RequestDto;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -128,6 +129,13 @@ public class UserAccountServiceImpl implements UserAccountService {
                                 anyMatch(s -> s.toLowerCase().contains(param.toLowerCase()))
                 )
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<UserAccount> findPaginated(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return userAccountRepository.findAll(pageable);
     }
 }
 

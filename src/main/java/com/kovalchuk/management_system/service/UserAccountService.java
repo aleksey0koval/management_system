@@ -30,4 +30,6 @@ public interface UserAccountService {
     RequestDto getRequestDto(Long id);
 
     List<UserAccount> searchUserAccount(String param);
+
+    Page<UserAccount> findPaginated(int pageNo, int pageSize);
 }

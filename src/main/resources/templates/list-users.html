@@ -9,17 +9,6 @@
 
     <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
 
-
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"-->
-<!--          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">-->
-
-<!--    <script>-->
-<!--        $(function () {-->
-<!--            $('[data-toggle="tooltip"]').tooltip()-->
-<!--        })-->
-<!--    </script>-->
-
-
 </head>
 
 <body>
@@ -61,41 +50,22 @@
     </tr>
 </table>
 
-<!--<div class="pagination">-->
-<!--    <nav aria-label="Pagination" th:if="${users.totalPages gt 0}">-->
-<!--        <ul class="pagination justify-content-end">-->
-<!--            <li class="page-item disabled">-->
-<!--                <a class="page-link" th:text="${'Total: ' + users.getTotalElements()}">Total</a>-->
-<!--            </li>-->
-<!--            <li class="page-item" th:classappend="${users.number eq 0} ? 'disabled'">-->
-<!--                <a class="page-link" th:href="@{/?page={id}(id=${users.number lt 2 ? 1 : users.number})}">Previous</a>-->
-<!--            </li>-->
-<!--            <li class="page-item" th:classappend="${i eq users.number + 1} ? 'active'"-->
-<!--                th:each="i : ${#numbers.sequence( users.number + 1, users.totalPages > 3 + users.number ? sensors.number + 3 : sensors.totalPages, 1)}">-->
-<!--                <a class="page-link" th:href="@{/?page={id}(id=${i})}" th:text="${i}"-->
-<!--                   th:title="${'Page '+ i}"></a>-->
-<!--            </li>-->
-<!--            <li class="page-item disabled" th:if="${users.number + 3 < users.totalPages}">-->
-<!--                <a class="page-link" href="#">...</a>-->
-<!--            </li>-->
-<!--            <li class="page-item" th:classappend="${users.number + 1 eq users.totalPages} ? 'disabled'">-->
-<!--                <a class="page-link" th:href="@{/?page={id}(id=${users.number + 2})}">Next</a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </nav>-->
+<div class="pagination">
+    Total: [[${totalItems}]]
+</div>
+<div class="pagination">
+    <a th:if="${currentPage > 1}" th:href="@{'/' + ${currentPage - 1}}">Prev</a>
+    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+        <a th:if="${currentPage != i}" th:href="@{'/' + ${i}}">[[${i}]]</a>
+        <span class="active" th:unless="${currentPage != i}"> [[${i}]]</span>
+    </span>
 
-<!--</div>-->
+    <a th:if="${currentPage < totalPages}" th:href="@{'/' + ${currentPage + 1}}">Next</a>
+</div>
 
 <div sec:authorize="hasAuthority('ADMIN')">
     <input class="btn add" type="button" value="New" onclick="window.location.href = '/user/new'"/>
 </div>
-
-
-
-
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"-->
-<!--        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"-->
-<!--        crossorigin="anonymous"></script>-->
 
 </body>
 </html>

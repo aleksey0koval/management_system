@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+        http://www.liquibase.org/xml/ns/pro
+        http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
+
+    <changeSet id="1" author="a.kovalchuk">
+        <sql>
+            create database if not exists management_system;
+        </sql>
+    </changeSet>
+    <changeSet id="2" author="a.kovalchuk">
+        <sql>
+            create table if not exists management_system.user_accounts(
+            id INT NOT NULL AUTO_INCREMENT,
+            username VARCHAR(45) NOT NULL UNIQUE,
+            password VARCHAR(255) NOT NULL,
+            first_name VARCHAR(255) NOT NULL,
+            last_name VARCHAR(255) NOT NULL,
+            date DATE NOT NULL,
+            enabled TINYINT(1) NOT NULL,
+            PRIMARY KEY (id)
+            )
+            ENGINE = InnoDB;
+        </sql>
+    </changeSet>
+    <changeSet id="3" author="a.kovalchuk">
+        <sql>
+            INSERT INTO management_system.user_accounts (id, username, password, first_name, last_name, date, enabled)
+            VALUES
+            ('1', 'admin', '$2y$12$kjBEvSNH8oN9508Vi8gpLOxzxsfc7H/HLRTQatlR4z3JOzrC4YXB6', 'Ivan','Ivanov',
+            '2021-05-31','1');
+            INSERT INTO management_system.user_accounts (id, username, password, first_name, last_name, date, enabled)
+            VALUES
+            ('2', 'user', '$2y$12$AhvCEcvgmaTNoupsdpUuNuCrmP6i.kdzb9iumHh14XSuUyCjHyjYW', 'Petr','Petrov', '2021-05-31',
+            '1');
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="a.kovalchuk">
+        <sql>
+            CREATE TABLE management_system.roles(
+            id INT NOT NULL AUTO_INCREMENT,
+            name VARCHAR(45) NOT NULL,
+            PRIMARY KEY (id)
+            )
+            ENGINE = InnoDB;
+        </sql>
+    </changeSet>
+    <changeSet id="5" author="a.kovalchuk">
+        <sql>
+            INSERT INTO management_system.roles (id, name) VALUES( '1', 'USER');
+            INSERT INTO management_system.roles (id, name) VALUES( '2', 'ADMIN');
+        </sql>
+    </changeSet>
+
+    <changeSet id="6" author="a.kovalchuk">
+        <sql>
+            CREATE TABLE management_system.user_roles(
+            user_id INT NOT NULL,
+            role_id INT NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES user_accounts (id),
+            FOREIGN KEY (role_id) REFERENCES roles (id)
+            )
+            ENGINE = InnoDB;
+        </sql>
+    </changeSet>
+    <changeSet id="7" author="a.kovalchuk">
+        <sql>
+            INSERT INTO management_system.user_roles (user_id, role_id) VALUES('1', '2');
+            INSERT INTO management_system.user_roles (user_id, role_id) VALUES('2', '1');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

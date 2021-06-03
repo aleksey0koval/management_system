@@ -28,13 +28,4 @@ public class Role implements Serializable {
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<UserAccount> userAccounts;
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", userAccounts=" + userAccounts +
-                '}';
-    }
 }

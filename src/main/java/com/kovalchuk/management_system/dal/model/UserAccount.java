@@ -30,8 +30,8 @@ public class UserAccount implements Serializable {
     private Long id;
 
     @NotBlank(message = "Не должно быть пустым")
-//    @Size(min = 3, max = 16, message = "Длина username должна быть от 3 до 16 символов")
-//    @Pattern(regexp = "[a-zA-Z]*", message = "Только латинские буквы")
+    @Size(min = 3, max = 16, message = "Длина username должна быть от 3 до 16 символов")
+    @Pattern(regexp = "[a-zA-Z]*", message = "Только латинские буквы")
     @Column(name = "username")
     private String username;
 

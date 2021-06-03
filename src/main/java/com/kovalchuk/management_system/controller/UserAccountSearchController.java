@@ -16,7 +16,7 @@ public class UserAccountSearchController {
     }
 
 
-    @GetMapping("/search")
+    @GetMapping("{pageNo}/search")
     public String searchUserAccount(@RequestParam(value = "param", required = false) String param,
                                     Model model) {
         if (param != null && !"".equals(param.trim())) {

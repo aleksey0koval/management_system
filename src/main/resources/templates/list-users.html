@@ -21,7 +21,7 @@
 <h1>Management System</h1>
 
 <form th:action="@{search}">
-    <input name="param" type="search" placeholder="enter text to search">
+    <input name="param" type="text" placeholder="enter text to search">
     <button class="btn logout" type="submit">Search</button>
 </form>
 
@@ -37,7 +37,7 @@
         <th>Role</th>
     </tr>
     <tr th:each="items: ${users}">
-        <td><a th:text="${items.username}" th:href="@{/user/{id}(id=${items.id})}"></a></td>
+        <td><a th:text="${items.username}" th:href="@{/user/{pageNo}/{id}(id=${items.id})}"></a></td>
         <td th:text="${items.password}"></td>
         <td th:text="${items.firstName}"></td>
         <td th:text="${items.lastName}"></td>
@@ -54,13 +54,13 @@
     Total: [[${totalItems}]]
 </div>
 <div class="pagination">
-    <a th:if="${currentPage > 1}" th:href="@{'/' + ${currentPage - 1}}">Prev</a>
+    <a th:if="${currentPage > 1}" th:href="@{'/user/' + ${currentPage - 1}}">Prev</a>
     <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-        <a th:if="${currentPage != i}" th:href="@{'/' + ${i}}">[[${i}]]</a>
+        <a th:if="${currentPage != i}" th:href="@{'/user/' + ${i}}">[[${i}]]</a>
         <span class="active" th:unless="${currentPage != i}"> [[${i}]]</span>
     </span>
 
-    <a th:if="${currentPage < totalPages}" th:href="@{'/' + ${currentPage + 1}}">Next</a>
+    <a th:if="${currentPage < totalPages}" th:href="@{'/user/' + ${currentPage + 1}}">Next</a>
 </div>
 
 <div sec:authorize="hasAuthority('ADMIN')">

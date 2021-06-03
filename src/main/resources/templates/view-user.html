@@ -43,7 +43,7 @@
             <td th:text="${items.name}"></td>
         </div>
         <div sec:authorize="hasAuthority('ADMIN')">
-            <td><a th:href="@{/user/{id}/edit (id=${user.id})}">Edit</a></td>
+            <td><a th:href="@{/user/{pageNo}/{id}/edit (id=${user.id})}">Edit</a></td>
         </div>
     </tr>
 </table>

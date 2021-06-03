@@ -7,6 +7,7 @@ import com.kovalchuk.management_system.service.RoleService;
 import com.kovalchuk.management_system.service.UserAccountService;
 import com.kovalchuk.management_system.service.dto.RequestDto;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -32,21 +34,20 @@ public class UserAccountController {
     }
 
     @GetMapping("")
-    public String showAllUserAccounts(Model model) {
-        model.addAttribute("users", userAccountService.findAll());
-        return "list-users";
-    }
-
-    @GetMapping("sss")
     public String showAllUserAccounts(Model model,
-                             Pageable pageable) {
-        Page<UserAccount> page = userAccountService.findAll(pageable);
+                                      HttpServletRequest request) {
+        int page = 0;
+        int size = 4;
 
-        model.addAttribute("page", page);
-        model.addAttribute("url", "/user");
+        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+            page = Integer.parseInt(request.getParameter("page")) - 1;
+        }
+        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+            size = Integer.parseInt(request.getParameter("size"));
+        }
+        model.addAttribute("users", userAccountService.findAll(PageRequest.of(page, size)));
         return "list-users";
     }
-
 
     @GetMapping("/{id}")
     public String getByUserId(@PathVariable Long id,
@@ -98,11 +99,11 @@ public class UserAccountController {
     }
 
     @ExceptionHandler
-    public ResponseEntity<UsernameDuplicate> handleException(
-            DuplicateUsernameException exception) {
+    public String handleException(DuplicateUsernameException exception
+                                  ) {
         UsernameDuplicate duplicate = new UsernameDuplicate();
         duplicate.setInfo(exception.getMessage());
-        return new ResponseEntity<>(duplicate, HttpStatus.BAD_REQUEST);
+        return "error";
     }
 
 

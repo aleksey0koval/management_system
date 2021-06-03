@@ -18,7 +18,9 @@
     </div>
 </form>
 
-<h1>Edit user</h1>
+<h1>Management System</h1>
+<h2>Edit user</h2>
+
 <form th:action="@{updateUser}" th:object="${user}" th:method="post">
 
     <input type="hidden" th:field="*{id}"/>

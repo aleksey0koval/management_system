@@ -1,0 +1,30 @@
+.user {
+    margin-top: 10px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+.user td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.user tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.user tr:hover {
+    background-color: #ddd;
+}
+
+.user th {
+    border: 1px solid #ddd;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: lavender;
+    color: black;
+}

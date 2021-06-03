@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Users</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+
+</head>
+
+<body>
+<form method="post" th:action="@{/logout}">
+    <div>
+        <button class="btn logout" type="submit">Logout</button>
+    </div>
+</form>
+
+<h1>Management System</h1>
+
+<div th:utext="'Exception: ' + ${message}"></div>
+<br>
+<input class="btn cancel" type="button" value="Back" onclick="window.location.href = '/user'"/>
+
+
+</body>
+</html>

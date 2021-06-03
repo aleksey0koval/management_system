@@ -18,4 +18,9 @@ ADMIN - Авторизация (Login)
 
 Пароли в БД хранятся в хешированом виде с применением алгоритма bcrypt.
 
+По умолчанию установлено два пользователя:
+
+1) username - user, password - user, role - USER;
+2) username - admin, password - admin, role - ADMIN
+
 Стек технологий Java 11, Spring Boot, Spring Security, Spring Data, Lombok, Liquibase, MySQL, Thymeleaf
